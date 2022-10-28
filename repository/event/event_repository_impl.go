@@ -12,7 +12,7 @@ import (
 type EventRepositoryImpl struct {
 }
 
-func NewRepositoryImpl() EventRepostory {
+func NewEventRepositoryImpl() EventRepostory {
 	return &EventRepositoryImpl{}
 }
 
