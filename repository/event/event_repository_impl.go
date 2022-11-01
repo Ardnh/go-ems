@@ -29,7 +29,7 @@ func (repository *EventRepositoryImpl) Save(ctx context.Context, tx *sql.Tx, eve
 }
 
 func (repository *EventRepositoryImpl) Update(ctx context.Context, tx *sql.Tx, event domain.Event) domain.Event {
-	SQL := "UPDATE events SET category_id = ?, name = ? , tagline = ?, description = ?, organizer = ?, start_date = ?, end_date = ?, registration_start_date = ?, registration_end_date = ?, location = ?, capacity = ?, banner_url = ?, status = ? WHERE id = ? AND user_id = ?"
+	SQL := "UPDATE events SET category_id = ?, name = ? , tagline = ?, description = ?, organizer = ?, start_date = ?, end_date = ?, registration_start_date = ?, registration_end_date = ?, location = ?, capacity = ?, banner_url = ?, status = ? WHERE id = ? AND user_id = ?;"
 	_, err := tx.ExecContext(ctx, SQL, event.CategoryId, event.Name, event.Tagline, event.Description, event.Organizer, event.StartDate, event.EndDate, event.RegistrationStartDate, event.RegistrationEndDate, event.Location, event.Capacity, event.BannerUrl, event.Status, event.Id, event.UserId)
 	helper.PanicIfError(err)
 

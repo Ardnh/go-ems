@@ -1,7 +1,11 @@
 package domain
 
 type Advertisement struct {
-	UserId    int
-	EventId   int
-	BannerUrl string
+	Id           int
+	UserId       int
+	EventId      int
+	InstagramUrl string
+	TwitterUrl   string
+	FacebookUrl  string
+	BannerUrl    string
 }
