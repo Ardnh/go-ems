@@ -41,3 +41,11 @@ func (repository *UserRepositoryImpl) FindByUsername(ctx context.Context, tx *sq
 	}
 
 }
+
+func (repository *UserRepositoryImpl) Update(ctx context.Context, tx *sql.Tx, user domain.User) error {
+	SQL := "UPDATE user SET firstname = ?, lastname = ?, organization = ? WHERE id = ?"
+	_, err := tx.ExecContext(ctx, SQL, user.FirstName, user.LastName, user.Organization, user.Id)
+	helper.PanicIfError(err)
+
+	return err
+}

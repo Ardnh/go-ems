@@ -10,4 +10,5 @@ import (
 type UserRepository interface {
 	Register(ctx context.Context, tx *sql.Tx, user domain.User)
 	FindByUsername(ctx context.Context, tx *sql.Tx, name string) (domain.User, error)
+	Update(ctx context.Context, tx *sql.Tx, user domain.User) error
 }
