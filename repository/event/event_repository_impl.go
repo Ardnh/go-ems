@@ -36,6 +36,13 @@ func (repository *EventRepositoryImpl) Update(ctx context.Context, tx *sql.Tx, e
 	return event
 }
 
+func (repository *EventRepositoryImpl) UpdateVisitor(ctx context.Context, tx *sql.Tx, eventId int) {
+	SQL := "UPDATE events SET visitor =  visitor + 1 WHERE id = ?;"
+
+	_, err := tx.ExecContext(ctx, SQL, eventId)
+	helper.PanicIfError(err)
+}
+
 func (repository *EventRepositoryImpl) Delete(ctx context.Context, tx *sql.Tx, event domain.Event) {
 	SQL := "DELETE FROM events WHERE id = ? AND user_id = ?;"
 	_, err := tx.ExecContext(ctx, SQL, event.Id, event.UserId)

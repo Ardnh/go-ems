@@ -15,4 +15,5 @@ type EventRepostory interface {
 	FindByCategoryId(ctx context.Context, tx *sql.Tx, categoryId int) []domain.Event
 	FindByUserId(ctx context.Context, tx *sql.Tx, userId int) []domain.Event
 	FindAll(ctx context.Context, tx *sql.Tx) []domain.Event
+	UpdateVisitor(ctx context.Context, tx *sql.Tx, eventId int)
 }
