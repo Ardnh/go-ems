@@ -1,15 +1,17 @@
 package web
 
-type SuperUserCreateCategory struct {
-	Username string `json:"username" validate:"required"`
-	Password string `json:"password" validate:"required"`
+type SuperUserCreateRequest struct {
+	FirstName string `json:"firstname" validate:"required"`
+	LastName  string `json:"lastname" validate:"required"`
+	UserName  string `json:"username" validate:"required"`
+	Password  string `json:"password" validate:"required"`
 }
 
-type SuperUserResponse struct {
-	Id        string
+type SuperUserResponseByUserName struct {
+	Id        int
 	FirstName string
 	LastName  string
-	Username  string
+	UserName  string
 	Password  string
 }
 
