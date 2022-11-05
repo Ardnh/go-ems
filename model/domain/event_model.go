@@ -12,8 +12,10 @@ type Event struct {
 	EndDate               string
 	RegistrationStartDate string
 	RegistrationEndDate   string
+	RegistrationUrl       string
 	Location              string
 	Capacity              int
 	BannerUrl             string
+	Visitor               int
 	Status                string
 }

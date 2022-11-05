@@ -8,17 +8,17 @@ import (
 	"github.com/Ardnh/go-ems/helper"
 	"github.com/Ardnh/go-ems/model/domain"
 	"github.com/Ardnh/go-ems/model/web"
-	superuserRepository "github.com/Ardnh/go-ems/repository/super_user"
+	superuser "github.com/Ardnh/go-ems/repository/super_user"
 	"github.com/go-playground/validator/v10"
 )
 
 type SuperUserServiceImpl struct {
-	Repository superuserRepository.SuperUserRepository
+	Repository superuser.SuperUserRepository
 	DB         *sql.DB
 	Validate   *validator.Validate
 }
 
-func NewSuperUserService(repository superuserRepository.SuperUserRepository, db *sql.DB, validate *validator.Validate) SuperUserService {
+func NewSuperUserService(repository superuser.SuperUserRepository, db *sql.DB, validate *validator.Validate) SuperUserService {
 	return &SuperUserServiceImpl{
 		Repository: repository,
 		DB:         db,
@@ -60,5 +60,5 @@ func (service *SuperUserServiceImpl) FindByUsername(ctx context.Context, request
 		exception.NewNotFoundError(err.Error())
 	}
 
-	return helper.ToUserResponseByUsername(user), nil
+	return helper.ToSuperUserResponseByUsername(user), nil
 }
