@@ -36,9 +36,9 @@ func (repository *AdvertisementRepositoryImpl) Update(ctx context.Context, tx *s
 	return ads
 }
 
-func (repository *AdvertisementRepositoryImpl) Delete(ctx context.Context, tx *sql.Tx, ads domain.Advertisement) {
+func (repository *AdvertisementRepositoryImpl) Delete(ctx context.Context, tx *sql.Tx, advertiseId int, userId int) {
 	SQL := "DELETE FROM advertisement WHERE id = ? AND user_id = ?;"
-	_, err := tx.ExecContext(ctx, SQL, ads.Id, ads.UserId)
+	_, err := tx.ExecContext(ctx, SQL, advertiseId, userId)
 	helper.PanicIfError(err)
 }
 

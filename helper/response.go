@@ -61,3 +61,24 @@ func ToCategoryResponses(category []domain.Category) []web.CategoryResponse {
 
 	return categoryResponses
 }
+
+func ToAdvertiseResponse(ads domain.Advertisement) web.AdvertiseResponse {
+	return web.AdvertiseResponse{
+		Id:           ads.Id,
+		UserId:       ads.UserId,
+		EventId:      ads.EventId,
+		InstagramUrl: ads.InstagramUrl,
+		TwitterUrl:   ads.TwitterUrl,
+		FacebookUrl:  ads.FacebookUrl,
+		BannerUrl:    ads.BannerUrl,
+	}
+}
+
+func ToAdvertiseResponses(advertise []domain.Advertisement) []web.AdvertiseResponse {
+	var advertiseResponses []web.AdvertiseResponse
+	for _, item := range advertise {
+		advertiseResponses = append(advertiseResponses, ToAdvertiseResponse(item))
+	}
+
+	return advertiseResponses
+}
