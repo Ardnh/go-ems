@@ -45,3 +45,19 @@ func ToEventsResponses(events []domain.Event) []web.EventsResponse {
 
 	return eventsResponses
 }
+
+func ToCategoryResponse(category domain.Category) web.CategoryResponse {
+	return web.CategoryResponse{
+		Id:   category.Id,
+		Name: category.Name,
+	}
+}
+
+func ToCategoryResponses(category []domain.Category) []web.CategoryResponse {
+	var categoryResponses []web.CategoryResponse
+	for _, item := range category {
+		categoryResponses = append(categoryResponses, ToCategoryResponse(item))
+	}
+
+	return categoryResponses
+}
