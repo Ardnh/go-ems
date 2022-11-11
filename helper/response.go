@@ -82,3 +82,14 @@ func ToAdvertiseResponses(advertise []domain.Advertisement) []web.AdvertiseRespo
 
 	return advertiseResponses
 }
+
+func ToUserResponseByUsername(user domain.User) web.UserResponseByUserName {
+	return web.UserResponseByUserName{
+		Id:           user.Id,
+		FirstName:    user.FirstName,
+		LastName:     user.LastName,
+		UserName:     user.UserName,
+		Organization: user.Organization,
+		Password:     user.Password,
+	}
+}
