@@ -1,4 +1,4 @@
-package category
+package service
 
 import (
 	"context"
@@ -8,17 +8,17 @@ import (
 	"github.com/Ardnh/go-ems/helper"
 	"github.com/Ardnh/go-ems/model/domain"
 	"github.com/Ardnh/go-ems/model/web"
-	"github.com/Ardnh/go-ems/repository/category"
+	repository "github.com/Ardnh/go-ems/repository/category"
 	"github.com/go-playground/validator/v10"
 )
 
 type CategoryServiceImpl struct {
-	Repository category.CategoryRepository
+	Repository repository.CategoryRepository
 	DB         *sql.DB
 	Validate   *validator.Validate
 }
 
-func NewCategoryService(repository category.CategoryRepository, db *sql.DB, validate *validator.Validate) CategoryService {
+func NewCategoryService(repository repository.CategoryRepository, db *sql.DB, validate *validator.Validate) CategoryService {
 	return &CategoryServiceImpl{
 		Repository: repository,
 		DB:         db,
