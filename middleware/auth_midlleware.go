@@ -1,0 +1,84 @@
+package middleware
+
+import (
+	"errors"
+	"net/http"
+
+	"github.com/Ardnh/go-ems/helper"
+	"github.com/Ardnh/go-ems/model/web"
+	"github.com/golang-jwt/jwt/v4"
+)
+
+type AuthMiddleware struct {
+	Handler http.Handler
+}
+
+func NewAuthMiddleware(handler http.Handler) *AuthMiddleware {
+	return &AuthMiddleware{
+		Handler: handler,
+	}
+}
+
+func (middleware *AuthMiddleware) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
+	if request.Header.Get("X-API-KEY") == "RAHASIA" {
+		middleware.Handler.ServeHTTP(writer, request)
+	} else {
+		writer.Header().Set("Content-Type", "application/json")
+		writer.WriteHeader(http.StatusUnauthorized)
+
+		webResponse := web.WebResponse{
+			Code:   http.StatusUnauthorized,
+			Status: "UNAUTHORIZED",
+		}
+
+		helper.WriteToResponseBody(writer, webResponse)
+	}
+}
+
+func verifyJWTToken(tokenString string) (bool, error) {
+
+	jwtKey := helper.LoadEnvFile("JWT_SECRECT_KEY")
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return []byte(jwtKey), nil
+	})
+
+	if token.Valid {
+		return true, nil
+	} else if errors.Is(err, jwt.ErrTokenMalformed) {
+		return false, jwt.ErrTokenMalformed
+	} else if errors.Is(err, jwt.ErrTokenExpired) || errors.Is(err, jwt.ErrTokenNotValidYet) {
+		return false, jwt.ErrTokenExpired
+	} else {
+		return false, jwt.ErrTokenNotValidYet
+	}
+}
+
+func AuthCheck(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+		tokenString := request.Header.Get("X-API-KEY")
+
+		if tokenString != "" {
+			ok, err := verifyJWTToken(tokenString)
+
+			if !ok && err != nil {
+				webResponse := web.WebResponse{
+					Code:   http.StatusBadRequest,
+					Status: "BAD REQUEST",
+					Data:   err.Error(),
+				}
+
+				helper.WriteToResponseBody(writer, webResponse)
+			} else {
+				h.ServeHTTP(writer, request)
+			}
+
+		} else {
+			webResponse := web.WebResponse{
+				Code:   http.StatusUnauthorized,
+				Status: "UNAUTHORIZED",
+			}
+
+			helper.WriteToResponseBody(writer, webResponse)
+		}
+	})
+}

@@ -9,7 +9,7 @@ type UserCreateRequest struct {
 }
 
 type UserUpdateRequest struct {
-	Id           string `json:"id" validate:"required"`
+	Id           int    `json:"id" validate:"required"`
 	FirstName    string `json:"firstname" validate:"required"`
 	LastName     string `json:"lastname" validate:"required"`
 	UserName     string `json:"username" validate:"required"`
@@ -38,4 +38,9 @@ type UserResponseWithToken struct {
 	Code   int               `json:"code"`
 	Status string            `json:"status"`
 	Data   ResponseWithToken `json:"data"`
+}
+
+type UserLoginRequest struct {
+	UserName string `json:"username" validate:"required"`
+	Password string `json:"password" validate:"required"`
 }

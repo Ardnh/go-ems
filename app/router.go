@@ -13,9 +13,12 @@ import (
 func NewRouter(db *sql.DB, validate *validator.Validate) *mux.Router {
 	router := mux.NewRouter()
 
+	// Category
 	categoryRepository := categoryRepository.NewCategoryRepository()
 	categoryService := categoryService.NewCategoryService(categoryRepository, db, validate)
 	categoryController := categoryController.NewCategoryController(categoryService)
+
+	// User
 
 	router.HandleFunc("/category", categoryController.Create).Methods("POST")
 	router.HandleFunc("/category/{id}", categoryController.Update).Methods("PUT")
