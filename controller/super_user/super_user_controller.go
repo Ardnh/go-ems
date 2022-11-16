@@ -2,8 +2,7 @@ package controller
 
 import "net/http"
 
-type UserController interface {
+type SuperUserController interface {
 	Register(w http.ResponseWriter, r *http.Request)
-	Update(w http.ResponseWriter, r *http.Request)
 	Login(w http.ResponseWriter, r *http.Request)
 }
