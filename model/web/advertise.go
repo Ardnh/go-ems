@@ -19,6 +19,12 @@ type AdvertiseUpdateRequest struct {
 	BannerUrl    string `json:"banner_url" validate:"required"`
 }
 
+type AdvertiseDeleteRequest struct {
+	Id     int
+	UserId int
+	PubId  string
+}
+
 type AdvertiseResponse struct {
 	Id           int    `json:"id" validate:"required"`
 	UserId       int    `json:"user_id" validate:"required"`
